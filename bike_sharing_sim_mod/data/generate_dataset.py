@@ -1,116 +1,61 @@
 import pandas as pd
 import numpy as np
-import random
 import os
 
-def generate_synthetic_dataset(num_agents=10000):
-    print(f"Starting Monte Carlo Simulation for {num_agents} Agents...")
+def generate_improved_dataset(records=10000):
+    np.random.seed(42)
     
-    # 1. SETUP
+    # 1. Feature Generation
+    # Distance in meters (0 to 600m)
+    distance = np.random.uniform(50, 600, records)
+    
+    # Incentive in Euros (0.5 to 5.0)
+    incentive = np.random.uniform(0.5, 5.0, records)
+    
+    # Weather (0: Clear, 1: Rain/Bad) - 20% chance of rain
+    weather = np.random.choice([0, 1], size=records, p=[0.8, 0.2])
+    
+    # Urgency (0: Low, 1: High) - 30% are in a hurry
+    urgency = np.random.choice([0, 1], size=records, p=[0.7, 0.3])
+    
+    # 2. Bounded Rationality Logic (The "Utility" Function)
+    # This is NOT linear. We use a log-base for incentives and penalty for distance.
+    
+    # Base utility starts from the incentive (logarithmic growth)
+    utility = 2 * np.log1p(incentive) 
+    
+    # Penalties
+    utility -= 0.01 * distance  # Linear penalty for distance
+    utility -= 1.5 * weather    # Heavy penalty for rain
+    utility -= 2.0 * urgency    # Heaviest penalty for being in a hurry
+    
+    # Threshold Effect: If distance > 400m, add an extra penalty (the "exhaustion" barrier)
+    utility[distance > 400] -= 1.5
+    
+    # 3. Decision Making (Sigmoid function to convert utility to probability)
+    # We add some "Noise" (human randomness)
+    noise = np.random.normal(0, 0.5, records)
+    probability = 1 / (1 + np.exp(-(utility + noise)))
+    
+    # Final Decision: 1 if prob > 0.5, else 0
+    accepted = (probability > 0.5).astype(int)
+    
+    # Create DataFrame
+    df = pd.DataFrame({
+        'Distance_m': distance.round(2),
+        'Incentive_Euro': incentive.round(2),
+        'Weather_Bad': weather,
+        'Urgency_High': urgency,
+        'Accepted': accepted
+    })
+    
+    # Create directory if it doesn't exist
     os.makedirs('data', exist_ok=True)
+    df.to_csv('data/synthetic_dataset.csv', index=False)
     
-    # Use a List instead of a DataFrame for maximum speed
-    data = []
-    
-    for _ in range(num_agents):
-        # ---------------------------------------------------------
-        # 2. AGENT & ENVIRONMENT GENERATION
-        # ---------------------------------------------------------
-        
-        # User Category (Based on options.json): 
-        # 1 = Loyal (30%), 2 = Flexible (50%), 3 = Opportunistic (20%)
-        user_category = np.random.choice([1, 2, 3], p=[0.3, 0.5, 0.2])
-        
-        # Objective Conditions
-        distance = round(random.uniform(0.1, 3.0), 2)  # Distance: 0.1 to 3.0 blocks
-        incentive = round(random.uniform(0.1, 2.0), 2) # Offer: 0.10€ to 2.00€
-        
-        # Subjective Conditions (Bounded Rationality)
-        weather = random.choice([0, 1])  # 0 = Clear, 1 = Rain
-        urgency = round(random.uniform(0.0, 1.0), 2)  # 0 = Relaxed (Leisure), 1 = In a hurry
-        
-        # ---------------------------------------------------------
-        # 3. THE BRAIN (THE DECISION FUNNEL)
-        # ---------------------------------------------------------
-        
-        # A. Define Base Probability based on Agent's psychology
-        if user_category == 1:
-            base_prob = random.uniform(0.0, 0.2)
-        elif user_category == 2:
-            base_prob = random.uniform(0.4, 0.7)
-        else:
-            base_prob = random.uniform(0.8, 1.0)
-            
-        # B. Distance Penalty: Degradation of incentive value due to distance
-        distance_penalty = distance / 3.0                   
-        effective_incentive = incentive * (1 - distance_penalty * 0.7)
-        
-        # Calculate Initial Acceptance Probability
-        prob = base_prob * effective_incentive * 1.5
-        
-        # C. Bounded Rationality Penalties (The thesis innovations)
-        # Rain cuts probability by 40% (Based on Kim, 2018)
-        weather_penalty = 0.4 if weather == 1 else 0.0
-        # Urgency cuts probability by up to 35% (Based on Fukushige et al., 2022)
-        urgency_penalty = urgency * 0.35     
-        
-        prob = prob - weather_penalty - urgency_penalty
-        
-        # D. Stochastic Noise to avoid AI Overfitting
-        noise = random.uniform(-0.1, 0.1)
-        prob = prob + noise
-        
-        # Lock probability strictly between 0.0 and 1.0
-        final_prob = max(0.0, min(1.0, prob))
-        
-        # E. The Final Decision: Roll the virtual dice
-        accepted = 1 if random.random() < final_prob else 0
-        
-        # ---------------------------------------------------------
-        # Record the experience in the list (fast O(1) operation)
-        # ---------------------------------------------------------
-        data.append({
-            'User_Type': user_category,
-            'Distance_Blocks': distance,
-            'Incentive_Euros': incentive,
-            'Weather_Rain': weather,
-            'Urgency_Level': urgency,
-            'Accepted': accepted
-        })
+    print(f"--- Dataset V2 Generated ---")
+    print(df['Accepted'].value_counts(normalize=True))
+    return df
 
-    # ---------------------------------------------------------
-    # 4. EXPORT AND SANITY CHECKS
-    # ---------------------------------------------------------
-    
-    # Convert the list to a DataFrame
-    df = pd.DataFrame(data)
-    
-    # Save the dataset
-    output_path = "bike_sharing_sim_mod/data/synthetic_dataset.csv"
-    df.to_csv(output_path, index=False)
-    
-    print(f"Simulation completed successfully!")
-    print(f"File saved to: {output_path}")
-    
-    #validate if file was saved 
-    if os.path.exists(output_path):
-        print("File validation successful: The dataset was saved correctly.")
-    else:
-        print("File validation failed: The dataset was not found.")
-    
-    # Data Validation: Sanity Check
-    acceptance_rate = df['Accepted'].mean() * 100
-    print(f"\n--- Data Validation (Sanity Check) ---")
-    print(f"Total Incentive Acceptance Rate: {acceptance_rate:.2f}%")
-    
-    if 15.0 <= acceptance_rate <= 40.0:
-        print("The acceptance rate is highly realistic!")
-    else:
-        print("Warning: The acceptance rate is outside realistic bounds. We might need to adjust the weights.")
-    
-    print("\nPreview of the first 5 records:")
-    print(df.head())
-
-# Execute the script
 if __name__ == "__main__":
-    generate_synthetic_dataset()
+    generate_improved_dataset()
