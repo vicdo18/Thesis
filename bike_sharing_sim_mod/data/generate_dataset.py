@@ -6,7 +6,7 @@ import os
 def generate_synthetic_dataset(num_agents=10000):
     print(f"Starting Monte Carlo Simulation for {num_agents} Agents...")
     
-    # 1. SETUP: Create 'data' folder to keep things organized
+    # 1. SETUP
     os.makedirs('data', exist_ok=True)
     
     # Use a List instead of a DataFrame for maximum speed
@@ -42,7 +42,7 @@ def generate_synthetic_dataset(num_agents=10000):
             base_prob = random.uniform(0.8, 1.0)
             
         # B. Distance Penalty: Degradation of incentive value due to distance
-        distance_penalty = distance / 3.0
+        distance_penalty = distance / 3.0                   
         effective_incentive = incentive * (1 - distance_penalty * 0.7)
         
         # Calculate Initial Acceptance Probability
@@ -52,7 +52,7 @@ def generate_synthetic_dataset(num_agents=10000):
         # Rain cuts probability by 40% (Based on Kim, 2018)
         weather_penalty = 0.4 if weather == 1 else 0.0
         # Urgency cuts probability by up to 35% (Based on Fukushige et al., 2022)
-        urgency_penalty = urgency * 0.35 
+        urgency_penalty = urgency * 0.35     
         
         prob = prob - weather_penalty - urgency_penalty
         
