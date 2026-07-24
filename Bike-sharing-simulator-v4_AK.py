@@ -60,7 +60,7 @@ class BikeSimulator:
                 'daily_budget': daily_budget, #money available each day
                 'remaining_budget': daily_budget, #current money available
                 'incentive_strategy': 'conservative', #initial strategy, will be updated if dynamic
-                'demand_history': [],
+                'demand_history': [], 
                 'demand': 0,
                 'revenue': 0,
                 'total_incentives_paid': 0,

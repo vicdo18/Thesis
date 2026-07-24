@@ -54,7 +54,6 @@ def train_xgboost_model():
     # --- STEP 4: Model Evaluation ---
     print("\n--- STEP 4: Evaluating the Model ---")
     
-    # Ask the model to predict the outcomes for the unseen Test Set
     y_pred = model.predict(X_test)
     
     # Calculate Metrics
