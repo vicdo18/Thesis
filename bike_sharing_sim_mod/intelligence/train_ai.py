@@ -7,12 +7,12 @@ import xgboost as xgb
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def train_xgboost_model():
+def train_xgboost_model(data_path='data/synthetic_dataset.csv', model_dir='intelligence', model_name='xgboost_model.pkl'):
     print("--- STEP 1: Loading the Dataset ---")
-    data_path = 'C:\\Users\\vixky\\Desktop\\Bike-sharing-simulator-v3 2\\Bike-sharing-simulator-v3\\simulator_v4\\bike_sharing_sim_mod\\data\\data\\synthetic_dataset.csv'
     
+    # 1. Check if the file exists
     if not os.path.exists(data_path):
-        print(f"Error: Dataset not found at {data_path}. Please run generate_dataset.py first.")
+        print(f"Error: Dataset not found at '{data_path}'. Please run generate_dataset.py first.")
         return
 
     # Load the data
@@ -29,7 +29,7 @@ def train_xgboost_model():
     y = df['Accepted']
     
     # Split the data: 80% for training, 20% for testing
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42, stratify=y)
     
     print(f"Training set size: {len(X_train)} records")
     print(f"Testing set size: {len(X_test)} records")
@@ -43,7 +43,6 @@ def train_xgboost_model():
         learning_rate=0.1,     # Step size shrinkage
         max_depth=5,           # Maximum depth of a tree
         random_state=42,       # For reproducibility
-        use_label_encoder=False,
         eval_metric='logloss'  # Hides a deprecation warning
     )
     
@@ -67,7 +66,7 @@ def train_xgboost_model():
     print("\n--- STEP 4.5: Generating AI Visualizations ---")
     
     # Create a folder to store models and plots
-    os.makedirs('intelligence', exist_ok=True)
+    os.makedirs(model_dir, exist_ok=True)
 
     sns.set_theme(style="whitegrid")
     fig, axes = plt.subplots(1, 2, figsize=(15, 6))
@@ -90,16 +89,21 @@ def train_xgboost_model():
     
     plt.tight_layout()
     
-    plot_path = 'intelligence/ai_diagnostics.png'
+    plot_path = os.path.join(model_dir, 'ai_diagnostics.png')
     plt.savefig(plot_path, dpi=300)
     print(f"Saved AI Diagnostics plot to: {plot_path}")
     
     print("\n--- STEP 5: Saving the Model ---")
     
-    model_path = 'intelligence/xgboost_model.pkl'
-    joblib.dump(model, model_path)
+    # save model
+    model_path = os.path.join(model_dir, model_name)
+    joblib.dump({'model': model, 'features': list(X.columns)}, model_path)
     
     print(f"Brain saved successfully at: {model_path}")
+    
+    # Print the order of features (Important for the RiderBrain)
+    feature_names = list(X.columns)
+    print(f"\n[IMPORTANT] Model trained with features in this exact order: {feature_names}")
     print("You can now load this model in your simulator to make real-time decisions!")
     
     plt.show()
