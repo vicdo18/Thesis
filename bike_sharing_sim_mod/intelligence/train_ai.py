@@ -7,9 +7,17 @@ import xgboost as xgb
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def train_xgboost_model(data_path='data/synthetic_dataset.csv', model_dir='intelligence', model_name='xgboost_model.pkl'):
+BASE = os.path.dirname(os.path.abspath(__file__))
+PROJECT = os.path.dirname(BASE)
+
+def train_xgboost_model(data_path=None, model_dir=None, model_name='xgboost_model.pkl'):
+    if data_path is None:
+        data_path = os.path.join(PROJECT, 'data', 'synthetic_dataset.csv')
+    if model_dir is None:
+        model_dir = BASE
+
     print("--- STEP 1: Loading the Dataset ---")
-    
+
     # 1. Check if the file exists
     if not os.path.exists(data_path):
         print(f"Error: Dataset not found at '{data_path}'. Please run generate_dataset.py first.")

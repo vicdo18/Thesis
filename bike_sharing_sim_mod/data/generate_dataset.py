@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+BASE = os.path.dirname(os.path.abspath(__file__))
+
 
 DEFAULT_PARAMS = {
     'incentive_weight': 2.0,
@@ -16,8 +18,10 @@ DEFAULT_PARAMS = {
     'urgency_prob': 0.3,
 }
 
-def generate_dataset(records=10000, params=None, seed=42, out_path='data/synthetic_dataset.csv'):
+def generate_dataset(records=10000, params=None, seed=42, out_path=None):
     params = {**DEFAULT_PARAMS, **(params or {})}
+    if out_path is None:
+        out_path = os.path.join(BASE, 'synthetic_dataset.csv')
     np.random.seed(seed)
 
     # 1. Feature Generation
@@ -65,7 +69,7 @@ def generate_dataset(records=10000, params=None, seed=42, out_path='data/synthet
     })
 
     # Create directory if it doesn't exist
-    os.makedirs(os.path.dirname(out_path) or '.', exist_ok=True)
+    # os.makedirs(os.path.dirname(out_path) or '.', exist_ok=True)
     df.to_csv(out_path, index=False)
     
     print(f"--- Dataset V2 Generated ---")
@@ -101,8 +105,9 @@ def visualize_behavior(df):
 
     plt.tight_layout()
     
-    plt.savefig('data/behavioral_analysis.png', dpi=300)
-    print("Saved visualization to: data/behavioral_analysis.png")
+    behavior_path = os.path.join(BASE, 'behavioral_analysis.png')
+    plt.savefig(behavior_path, dpi=300)
+    print(f"Saved visualization to: {behavior_path}")
     
     plt.show()
 
@@ -140,9 +145,9 @@ def visualize_scatter(df):
     
     plt.tight_layout()
     
-    os.makedirs('data', exist_ok=True)
-    plt.savefig('data/advanced_scatter_analysis.png', dpi=300)
-    print("Saved advanced plot to: data/advanced_scatter_analysis.png")
+    scatter_path = os.path.join(BASE, 'advanced_scatter_analysis.png')
+    plt.savefig(scatter_path, dpi=300)
+    print(f"Saved advanced plot to: {scatter_path}")
 
     plt.show()
 
