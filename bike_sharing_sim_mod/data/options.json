@@ -1,0 +1,51 @@
+{
+    "stations": {
+        "capacity": 10,
+        "daily_budget": 100,
+        "max_incentive": 2,
+        "morning_peak":[7,11],
+        "evening_peak":[16,20]
+    },
+    "trips": {
+        "base_price": 2.0,
+        "price_per_km": 0.1
+    },
+    "demand": {
+        "base_demand": 15
+    },
+    "users": {
+        "category_distribution":[0.3, 0.5, 0.2],
+        "base_distance":8.0,
+        "max_redirection": 3.0,
+        "loyal": [
+            0.0,
+            0.2
+        ],
+        "flexible": [
+            0.4,
+            0.7
+        ],
+        "opportunistic": [
+            0.8,
+            1.0
+        ]
+    },
+    "strategies": {
+        "parameters":{
+            "adaptive":{
+                "base_incentive_factor":0.4,
+                "peak_incentive_factor":0.8
+            },
+            "conservative":{
+                "incentive_factor":0.5
+            },
+            "aggressive":{
+                "incentive_factor":1.2
+            },
+            "static":{
+                "incentive_factor":0.2
+            }
+        },
+        "mode":"conservative"
+    }
+}
