@@ -18,6 +18,14 @@ class BikeSimulator:
         with open(pref_file) as f:
             self.preferences=json.load(f)
 
+        # Set random seeds for reproducibility.
+        # Every run with the same seed produces identical results,
+        # which is essential for the simple-vs-realistic comparison experiment.
+        self.seed = self.preferences.get('experiment', {}).get('seed', 42)
+        random.seed(self.seed)
+        np.random.seed(self.seed)
+        print(f"[Simulator] Random seed set to {self.seed} — this run is deterministic.")
+
         with open(grid_file) as f:
             self.grid_size=len(json.load(f))
 

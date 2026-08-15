@@ -47,5 +47,8 @@
             }
         },
         "mode":"conservative"
+    },
+    "experiment": {
+        "seed": 42
     }
 }
