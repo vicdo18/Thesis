@@ -1158,8 +1158,8 @@ if __name__ == "__main__":
         print (mode)
         print ('=========')
         simulator = BikeSimulator(
-            grid_file='data/population_density_250000_100.json', 
-            station_file='data/bike_stations_250000_100.json', 
+            grid_file='data/population_density_250000_50.json', 
+            station_file='data/bike_stations_250000_50.json', 
             pref_file='data/options.json'
         )
         simulator.preferences['strategies']['mode']=mode

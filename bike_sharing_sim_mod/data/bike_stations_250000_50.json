@@ -1,0 +1,702 @@
+[
+    {
+        "grid_location": [
+            15,
+            7
+        ],
+        "population_density": 645,
+        "population_proportion": 0.002582044979623862,
+        "population_max": 1619,
+        "coordinates": [
+            7.711,
+            15.39
+        ],
+        "popularity": 0.08145233019827153
+    },
+    {
+        "grid_location": [
+            6,
+            12
+        ],
+        "population_density": 991,
+        "population_proportion": 0.003967141976445345,
+        "population_max": 1619,
+        "coordinates": [
+            12.192,
+            6.543
+        ],
+        "popularity": 0.13567124812937947
+    },
+    {
+        "grid_location": [
+            19,
+            4
+        ],
+        "population_density": 377,
+        "population_proportion": 0.0015091952826638698,
+        "population_max": 1619,
+        "coordinates": [
+            4.364,
+            18.412
+        ],
+        "popularity": 0.0869802811432823
+    },
+    {
+        "grid_location": [
+            12,
+            15
+        ],
+        "population_density": 495,
+        "population_proportion": 0.00198156940296715,
+        "population_max": 1619,
+        "coordinates": [
+            15.346,
+            12.577
+        ],
+        "popularity": 0.050083129989152056
+    },
+    {
+        "grid_location": [
+            18,
+            4
+        ],
+        "population_density": 399,
+        "population_proportion": 0.0015972650339068542,
+        "population_max": 1619,
+        "coordinates": [
+            4.98,
+            18.633
+        ],
+        "popularity": 0.0668527310479454
+    },
+    {
+        "grid_location": [
+            4,
+            10
+        ],
+        "population_density": 1088,
+        "population_proportion": 0.004355449516016685,
+        "population_max": 1619,
+        "coordinates": [
+            10.163,
+            4.393
+        ],
+        "popularity": 0.07894343652268682
+    },
+    {
+        "grid_location": [
+            2,
+            10
+        ],
+        "population_density": 1113,
+        "population_proportion": 0.004455528778792804,
+        "population_max": 1619,
+        "coordinates": [
+            10.904,
+            2.843
+        ],
+        "popularity": 0.1308701507948884
+    },
+    {
+        "grid_location": [
+            13,
+            6
+        ],
+        "population_density": 696,
+        "population_proportion": 0.002786206675687144,
+        "population_max": 1619,
+        "coordinates": [
+            6.509,
+            13.355
+        ],
+        "popularity": 0.05988389182341928
+    },
+    {
+        "grid_location": [
+            3,
+            18
+        ],
+        "population_density": 1162,
+        "population_proportion": 0.0046516841338339965,
+        "population_max": 1619,
+        "coordinates": [
+            18.523,
+            3.341
+        ],
+        "popularity": 0.06423928407123765
+    },
+    {
+        "grid_location": [
+            3,
+            10
+        ],
+        "population_density": 1100,
+        "population_proportion": 0.004403487562149222,
+        "population_max": 1619,
+        "coordinates": [
+            10.61,
+            3.55
+        ],
+        "popularity": 0.12961044628000817
+    },
+    {
+        "grid_location": [
+            11,
+            9
+        ],
+        "population_density": 882,
+        "population_proportion": 0.003530796390741467,
+        "population_max": 1619,
+        "coordinates": [
+            9.3,
+            11.631
+        ],
+        "popularity": 0.1393949197292711
+    },
+    {
+        "grid_location": [
+            16,
+            8
+        ],
+        "population_density": 597,
+        "population_proportion": 0.002389892795093714,
+        "population_max": 1619,
+        "coordinates": [
+            8.36,
+            16.219
+        ],
+        "popularity": 0.08630288546087532
+    },
+    {
+        "grid_location": [
+            0,
+            13
+        ],
+        "population_density": 1159,
+        "population_proportion": 0.004639674622300863,
+        "population_max": 1619,
+        "coordinates": [
+            13.603,
+            0.604
+        ],
+        "popularity": 0.052524878610630536
+    },
+    {
+        "grid_location": [
+            3,
+            14
+        ],
+        "population_density": 1044,
+        "population_proportion": 0.004179310013530716,
+        "population_max": 1619,
+        "coordinates": [
+            14.183,
+            3.059
+        ],
+        "popularity": 0.10648745789363509
+    },
+    {
+        "grid_location": [
+            8,
+            1
+        ],
+        "population_density": 245,
+        "population_proportion": 0.000980776775205963,
+        "population_max": 1619,
+        "coordinates": [
+            1.396,
+            8.659
+        ],
+        "popularity": 0.07274618745311273
+    },
+    {
+        "grid_location": [
+            8,
+            18
+        ],
+        "population_density": 403,
+        "population_proportion": 0.0016132777159510333,
+        "population_max": 1619,
+        "coordinates": [
+            18.1,
+            8.046
+        ],
+        "popularity": 0.0920511232314008
+    },
+    {
+        "grid_location": [
+            1,
+            6
+        ],
+        "population_density": 763,
+        "population_proportion": 0.003054419099927142,
+        "population_max": 1619,
+        "coordinates": [
+            6.651,
+            1.8820000000000001
+        ],
+        "popularity": 0.06097385091192257
+    },
+    {
+        "grid_location": [
+            15,
+            4
+        ],
+        "population_density": 524,
+        "population_proportion": 0.0020976613477874475,
+        "population_max": 1619,
+        "coordinates": [
+            4.491,
+            15.437
+        ],
+        "popularity": 0.12818670606910942
+    },
+    {
+        "grid_location": [
+            3,
+            11
+        ],
+        "population_density": 1099,
+        "population_proportion": 0.004399484391638177,
+        "population_max": 1619,
+        "coordinates": [
+            11.118,
+            3.312
+        ],
+        "popularity": 0.11956827578922369
+    },
+    {
+        "grid_location": [
+            14,
+            16
+        ],
+        "population_density": 347,
+        "population_proportion": 0.0013891001673325273,
+        "population_max": 1619,
+        "coordinates": [
+            16.915,
+            14.925
+        ],
+        "popularity": 0.14682172548863034
+    },
+    {
+        "grid_location": [
+            4,
+            6
+        ],
+        "population_density": 750,
+        "population_proportion": 0.0030023778832835605,
+        "population_max": 1619,
+        "coordinates": [
+            6.035,
+            4.03
+        ],
+        "popularity": 0.14185450050502013
+    },
+    {
+        "grid_location": [
+            1,
+            7
+        ],
+        "population_density": 903,
+        "population_proportion": 0.003614862971473407,
+        "population_max": 1619,
+        "coordinates": [
+            7.55,
+            1.19
+        ],
+        "popularity": 0.11555097025493821
+    },
+    {
+        "grid_location": [
+            16,
+            10
+        ],
+        "population_density": 593,
+        "population_proportion": 0.002373880113049535,
+        "population_max": 1619,
+        "coordinates": [
+            10.263,
+            16.219
+        ],
+        "popularity": 0.09764604413738696
+    },
+    {
+        "grid_location": [
+            4,
+            18
+        ],
+        "population_density": 966,
+        "population_proportion": 0.003867062713669226,
+        "population_max": 1619,
+        "coordinates": [
+            18.287,
+            4.509
+        ],
+        "popularity": 0.13065675579067737
+    },
+    {
+        "grid_location": [
+            3,
+            15
+        ],
+        "population_density": 1053,
+        "population_proportion": 0.004215338548130119,
+        "population_max": 1619,
+        "coordinates": [
+            15.68,
+            3.267
+        ],
+        "popularity": 0.06680420489199304
+    },
+    {
+        "grid_location": [
+            2,
+            11
+        ],
+        "population_density": 1117,
+        "population_proportion": 0.004471541460836983,
+        "population_max": 1619,
+        "coordinates": [
+            11.955,
+            2.367
+        ],
+        "popularity": 0.09614277449540287
+    },
+    {
+        "grid_location": [
+            18,
+            6
+        ],
+        "population_density": 457,
+        "population_proportion": 0.0018294489235474497,
+        "population_max": 1619,
+        "coordinates": [
+            6.749,
+            18.852
+        ],
+        "popularity": 0.12122252429114451
+    },
+    {
+        "grid_location": [
+            4,
+            17
+        ],
+        "population_density": 952,
+        "population_proportion": 0.0038110183265145994,
+        "population_max": 1619,
+        "coordinates": [
+            17.145,
+            4.62
+        ],
+        "popularity": 0.10908352153050786
+    },
+    {
+        "grid_location": [
+            6,
+            3
+        ],
+        "population_density": 360,
+        "population_proportion": 0.001441141383976109,
+        "population_max": 1619,
+        "coordinates": [
+            3.411,
+            6.106
+        ],
+        "popularity": 0.09440124616579475
+    },
+    {
+        "grid_location": [
+            16,
+            18
+        ],
+        "population_density": 178,
+        "population_proportion": 0.000712564350965965,
+        "population_max": 1619,
+        "coordinates": [
+            18.803,
+            16.408
+        ],
+        "popularity": 0.13391225412378693
+    },
+    {
+        "grid_location": [
+            16,
+            12
+        ],
+        "population_density": 538,
+        "population_proportion": 0.0021537057349420743,
+        "population_max": 1619,
+        "coordinates": [
+            12.350999999999999,
+            16.695
+        ],
+        "popularity": 0.056754464773634855
+    },
+    {
+        "grid_location": [
+            0,
+            17
+        ],
+        "population_density": 1479,
+        "population_proportion": 0.005920689185835181,
+        "population_max": 1619,
+        "coordinates": [
+            17.214,
+            0.388
+        ],
+        "popularity": 0.14265694699773773
+    },
+    {
+        "grid_location": [
+            16,
+            6
+        ],
+        "population_density": 560,
+        "population_proportion": 0.0022417754861850585,
+        "population_max": 1619,
+        "coordinates": [
+            6.052,
+            16.938
+        ],
+        "popularity": 0.053946332606752335
+    },
+    {
+        "grid_location": [
+            5,
+            19
+        ],
+        "population_density": 776,
+        "population_proportion": 0.003106460316570724,
+        "population_max": 1619,
+        "coordinates": [
+            18.802,
+            5.991
+        ],
+        "popularity": 0.09188067531578456
+    },
+    {
+        "grid_location": [
+            9,
+            16
+        ],
+        "population_density": 486,
+        "population_proportion": 0.0019455408683677472,
+        "population_max": 1619,
+        "coordinates": [
+            16.977,
+            9.091
+        ],
+        "popularity": 0.1429752736920989
+    },
+    {
+        "grid_location": [
+            6,
+            16
+        ],
+        "population_density": 699,
+        "population_proportion": 0.0027982161872202784,
+        "population_max": 1619,
+        "coordinates": [
+            16.979,
+            6.086
+        ],
+        "popularity": 0.06431043435791003
+    },
+    {
+        "grid_location": [
+            15,
+            8
+        ],
+        "population_density": 663,
+        "population_proportion": 0.0026541020488226675,
+        "population_max": 1619,
+        "coordinates": [
+            8.713,
+            15.302
+        ],
+        "popularity": 0.13930085544800735
+    },
+    {
+        "grid_location": [
+            12,
+            3
+        ],
+        "population_density": 490,
+        "population_proportion": 0.001961553550411926,
+        "population_max": 1619,
+        "coordinates": [
+            3.649,
+            12.83
+        ],
+        "popularity": 0.1123975723267267
+    },
+    {
+        "grid_location": [
+            9,
+            11
+        ],
+        "population_density": 947,
+        "population_proportion": 0.003791002473959376,
+        "population_max": 1619,
+        "coordinates": [
+            11.858,
+            9.166
+        ],
+        "popularity": 0.08270070402912913
+    },
+    {
+        "grid_location": [
+            9,
+            7
+        ],
+        "population_density": 836,
+        "population_proportion": 0.003346650547233409,
+        "population_max": 1619,
+        "coordinates": [
+            7.8469999999999995,
+            9.909
+        ],
+        "popularity": 0.1325613174137901
+    },
+    {
+        "grid_location": [
+            19,
+            18
+        ],
+        "population_density": 135,
+        "population_proportion": 0.0005404280189910409,
+        "population_max": 1619,
+        "coordinates": [
+            18.917,
+            18.607
+        ],
+        "popularity": 0.13643110213943144
+    },
+    {
+        "grid_location": [
+            5,
+            13
+        ],
+        "population_density": 961,
+        "population_proportion": 0.0038470468611140024,
+        "population_max": 1619,
+        "coordinates": [
+            13.281,
+            5.568
+        ],
+        "popularity": 0.062319602894844374
+    },
+    {
+        "grid_location": [
+            5,
+            16
+        ],
+        "population_density": 812,
+        "population_proportion": 0.0032505744549683347,
+        "population_max": 1619,
+        "coordinates": [
+            16.798000000000002,
+            5.7
+        ],
+        "popularity": 0.10481221326423532
+    },
+    {
+        "grid_location": [
+            12,
+            10
+        ],
+        "population_density": 839,
+        "population_proportion": 0.003358660058766543,
+        "population_max": 1619,
+        "coordinates": [
+            10.487,
+            12.42
+        ],
+        "popularity": 0.12820019432633173
+    },
+    {
+        "grid_location": [
+            12,
+            9
+        ],
+        "population_density": 839,
+        "population_proportion": 0.003358660058766543,
+        "population_max": 1619,
+        "coordinates": [
+            9.994,
+            12.969
+        ],
+        "popularity": 0.14095526802528863
+    },
+    {
+        "grid_location": [
+            3,
+            1
+        ],
+        "population_density": 170,
+        "population_proportion": 0.000680538986877607,
+        "population_max": 1619,
+        "coordinates": [
+            1.658,
+            3.17
+        ],
+        "popularity": 0.12989176058001187
+    },
+    {
+        "grid_location": [
+            5,
+            18
+        ],
+        "population_density": 780,
+        "population_proportion": 0.003122472998614903,
+        "population_max": 1619,
+        "coordinates": [
+            18.691,
+            5.992
+        ],
+        "popularity": 0.0754082608704901
+    },
+    {
+        "grid_location": [
+            11,
+            8
+        ],
+        "population_density": 852,
+        "population_proportion": 0.0034107012754101248,
+        "population_max": 1619,
+        "coordinates": [
+            8.795,
+            11.789
+        ],
+        "popularity": 0.14686186327505635
+    },
+    {
+        "grid_location": [
+            14,
+            3
+        ],
+        "population_density": 491,
+        "population_proportion": 0.001965556720922971,
+        "population_max": 1619,
+        "coordinates": [
+            3.054,
+            14.308
+        ],
+        "popularity": 0.12578844481757628
+    },
+    {
+        "grid_location": [
+            13,
+            14
+        ],
+        "population_density": 560,
+        "population_proportion": 0.0022417754861850585,
+        "population_max": 1619,
+        "coordinates": [
+            14.177,
+            13.573
+        ],
+        "popularity": 0.14818122450116
+    }
+]
