@@ -1,0 +1,35 @@
+{
+    "category_stats": {
+        "1": {
+            "total_trips": 15725,
+            "redirected_trips": 588,
+            "redirect_rate": 0.037392686804451514,
+            "total_incentives": 1445.2704481992391,
+            "avg_incentive": 2.457942939114352,
+            "incentive_per_trip": 0.091909090505516
+        },
+        "2": {
+            "total_trips": 26362,
+            "redirected_trips": 3101,
+            "redirect_rate": 0.11763143919277748,
+            "total_incentives": 6374.444978345814,
+            "avg_incentive": 2.0556094738296724,
+            "incentive_per_trip": 0.24180430082489243
+        },
+        "3": {
+            "total_trips": 10418,
+            "redirected_trips": 1355,
+            "redirect_rate": 0.13006335189095797,
+            "total_incentives": 2666.9588163909584,
+            "avg_incentive": 1.968235288849416,
+            "incentive_per_trip": 0.25599527897782287
+        }
+    },
+    "overall_stats": {
+        "total_trips": 52505,
+        "redirected_trips": 5044,
+        "redirect_rate": 0.09606704123416818,
+        "total_incentives": 10486.674242936011,
+        "avg_incentive": 2.079039302723238
+    }
+}

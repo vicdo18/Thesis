@@ -1157,34 +1157,35 @@ if __name__ == "__main__":
         print ('=========')
         print (mode)
         print ('=========')
-        simulator = BikeSimulator(grid_file='population_density_250000_50.json', station_file='bike_stations_250000_50.json', pref_file='options.json')
+        simulator = BikeSimulator(
+            grid_file='data/population_density_250000_100.json', 
+            station_file='data/bike_stations_250000_100.json', 
+            pref_file='data/options.json'
+        )
         simulator.preferences['strategies']['mode']=mode
         # Run simulation for 7 days
         results = simulator.run_simulation(days=5)
     
-        # Serializing json
+        # Serializing json (Metrics)
         json_object = json.dumps(results, indent=4, cls=NpEncoder)
-        filename = 'metrics_'+mode+'.json'
-        # Writing to sample.json
+        # --- ΑΛΛΑΓΗ 1: Προσθέσαμε το 'outputs/' ---
+        filename = 'outputs/metrics_' + mode + '.json'
+        
         with open(filename, "w") as outfile:
             outfile.write(json_object)
-            print(f"Station data saved to {filename}")
-    
-    # Visualize final state
-    #fig = simulator.visualize_current_state()
-    #plt.show()
-    
-    # Plot metrics
-    #metrics_fig = simulator.plot_metrics()
-    #plt.show()
+            print(f"Metrics data saved to {filename}")
     
         # Analyze incentive effectiveness by user category
         incentive_analysis = simulator.analyze_incentive_effectiveness()
-        filename = 'incentive_analysis_'+mode+'.json'
-        # Writing to sample.json
+        # --- ΑΛΛΑΓΗ 2: Προσθέσαμε το 'outputs/' ---
+        filename = 'outputs/incentive_analysis_' + mode + '.json'
+        
+        # --- ΔΙΟΡΘΩΣΗ BUG: Γράφουμε το incentive_analysis, όχι το results ---
+        incentive_json = json.dumps(incentive_analysis, indent=4, cls=NpEncoder)
+        
         with open(filename, "w") as outfile:
-            outfile.write(json_object)
-            print(f"Station data saved to {filename}")
+            outfile.write(incentive_json)
+            print(f"Incentive data saved to {filename}")
             
         print("\nOverall Incentive Effectiveness:")
         print(f"  Total trips: {incentive_analysis['overall_stats']['total_trips']}")
@@ -1192,14 +1193,6 @@ if __name__ == "__main__":
               f"({incentive_analysis['overall_stats']['redirect_rate']*100:.1f}%)")
         print(f"  Total incentives paid: ${incentive_analysis['overall_stats']['total_incentives']:.2f}")
         print(f"  Average incentive: ${incentive_analysis['overall_stats']['avg_incentive']:.2f}")
-        
-        print("\nBy User Category:")
-        for cat, stats in incentive_analysis['category_stats'].items():
-            desc = simulator.user_categories[cat]['description']
-            print(f"  Category {cat} ({desc}):")
-            print(f"    Trips: {stats['total_trips']}")
-            print(f"    Redirected: {stats['redirected_trips']} ({stats['redirect_rate']*100:.1f}%)")
-            print(f"    Avg incentive: ${stats['avg_incentive']:.2f}")
     
     # Show user category analysis visualization
     #cat_fig = simulator.visualize_user_category_performance()
