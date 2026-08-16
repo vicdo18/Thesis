@@ -14,7 +14,7 @@
         "base_demand": 15
     },
     "users": {
-        "user_model": "simple",
+        "user_model": "realistic",  
         "meters_per_unit": 133,
         "urgency_prob": 0.3,
         "category_distribution":[0.3, 0.5, 0.2],
