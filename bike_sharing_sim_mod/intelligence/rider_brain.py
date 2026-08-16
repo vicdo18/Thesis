@@ -16,25 +16,25 @@ class RiderBrain:
     def __init__(self, model_path=DEFAULT_MODEL):
         bundle = joblib.load(model_path)
         self.model = bundle['model']
-        self.features = bundle['features']   # feature order was saved with the model
+        self.features = bundle['features']   # feature order was saved with the model  -> dynamic feature order, not hardcoded
 
     def _vector(self, incentive, distance, weather_bad, urgency_high):
         # Build the feature vector IN THE ORDER the model expects,
-        # not a hardcoded order — so if training changes, this won't silently break.
+        # not a hardcoded order so if training changes, this won't silently break.
         values = {
             'Distance_m': distance,
             'Incentive_Euro': incentive,
             'Weather_Bad': int(weather_bad),
             'Urgency_High': int(urgency_high),
         }
-        return np.array([[values[f] for f in self.features]])
+        return np.array([[values[f] for f in self.features]]) # fight silently breaking if training changes
 
     def accept_probability(self, incentive, distance, weather_bad=0, urgency_high=0):
         """Return the acceptance probability (0..1)."""
         x = self._vector(incentive, distance, weather_bad, urgency_high)
         return float(self.model.predict_proba(x)[0][1])
 
-    def decide(self, incentive, distance, weather_bad=0, urgency_high=0):
+    def decide(self, incentive, distance, weather_bad=0, urgency_high=0):       #binary classification
         """Return True (accept) / False (reject)."""
         x = self._vector(incentive, distance, weather_bad, urgency_high)
         return bool(self.model.predict(x)[0])
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         (5.0, 100, 0, 0, "ACCEPT — high reward, close, ideal conditions"),
         (0.5, 550, 1, 1, "REJECT — tiny reward, far, rain, in a hurry"),
         (3.0, 250, 0, 0, "borderline"),
-        (5.0, 550, 0, 0, "REJECT? — good reward but beyond the walk cliff"),
+        (5.0, 550, 0, 0, "REJECT? — good reward but beyond the walk cliff"), #fukushige effect
     ]
     for inc, dist, w, u, note in tests:
         p = brain.accept_probability(inc, dist, w, u)

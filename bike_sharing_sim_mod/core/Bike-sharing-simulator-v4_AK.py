@@ -1176,7 +1176,6 @@ if __name__ == "__main__":
     
         # Serializing json (Metrics)
         json_object = json.dumps(results, indent=4, cls=NpEncoder)
-        # --- ΑΛΛΑΓΗ 1: Προσθέσαμε το 'outputs/' ---
         filename = 'outputs/metrics_' + mode + '.json'
         
         with open(filename, "w") as outfile:
@@ -1185,10 +1184,8 @@ if __name__ == "__main__":
     
         # Analyze incentive effectiveness by user category
         incentive_analysis = simulator.analyze_incentive_effectiveness()
-        # --- ΑΛΛΑΓΗ 2: Προσθέσαμε το 'outputs/' ---
         filename = 'outputs/incentive_analysis_' + mode + '.json'
         
-        # --- ΔΙΟΡΘΩΣΗ BUG: Γράφουμε το incentive_analysis, όχι το results ---
         incentive_json = json.dumps(incentive_analysis, indent=4, cls=NpEncoder)
         
         with open(filename, "w") as outfile:
