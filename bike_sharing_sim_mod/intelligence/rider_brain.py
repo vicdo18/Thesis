@@ -39,20 +39,39 @@ class RiderBrain:
         x = self._vector(incentive, distance, weather_bad, urgency_high)
         return bool(self.model.predict(x)[0])
 
-
 if __name__ == "__main__":
-    brain = RiderBrain()
-    print("Features:", brain.features)
+        brain = RiderBrain()
+        print("\n--- RIDER BRAIN EXPLAINABILITY & SANITY CHECK ---")
+        
+        tests = [
+            # (incentive, distance, weather, urgency, description)
+            (0.12, 100, 0, 0, "Tiny reward, very close "),
+            (0.12, 300, 0, 0, "Small amount, far (Rejection due to effort)"),
+            (2.00, 100, 0, 0, "Large amount, very close (Definite yes)"),
+            (2.00, 400, 0, 0, "Large amount, very far (Walk-Cliff - The lost money of Aggressive)")
+        ]
+        
+        for inc, dist, w, u, note in tests:
+            p = brain.accept_probability(inc, dist, w, u)
+            d = brain.decide(inc, dist, w, u)
+            
+            # Format for easy reading in the terminal
+            print(f"€{inc:.2f} | {dist}m  -->  Probability: {p*100:>5.1f}% | Decision: {str(d):<5} | {note}")
 
-    # Sanity checks — obvious cases
-    tests = [
-        # (incentive, distance, weather, urgency, expected)
-        (5.0, 100, 0, 0, "ACCEPT — high reward, close, ideal conditions"),
-        (0.5, 550, 1, 1, "REJECT — tiny reward, far, rain, in a hurry"),
-        (3.0, 250, 0, 0, "borderline"),
-        (5.0, 550, 0, 0, "REJECT? — good reward but beyond the walk cliff"), #fukushige effect
-    ]
-    for inc, dist, w, u, note in tests:
-        p = brain.accept_probability(inc, dist, w, u)
-        d = brain.decide(inc, dist, w, u)
-        print(f"EUR {inc:<4} {dist:>4}m w={w} u={u} -> P={p:.2f} decide={d}  ({note})")
+
+# if __name__ == "__main__":
+#     brain = RiderBrain()
+#     print("Features:", brain.features)
+
+#     # Sanity checks — obvious cases
+#     tests = [
+#         # (incentive, distance, weather, urgency, expected)
+#         (5.0, 100, 0, 0, "ACCEPT — high reward, close, ideal conditions"),
+#         (0.5, 550, 1, 1, "REJECT — tiny reward, far, rain, in a hurry"),
+#         (3.0, 250, 0, 0, "borderline"),
+#         (5.0, 550, 0, 0, "REJECT? — good reward but beyond the walk cliff"), #fukushige effect
+#     ]
+#     for inc, dist, w, u, note in tests:
+#         p = brain.accept_probability(inc, dist, w, u)
+#         d = brain.decide(inc, dist, w, u)
+#         print(f"EUR {inc:<4} {dist:>4}m w={w} u={u} -> P={p:.2f} decide={d}  ({note})")
