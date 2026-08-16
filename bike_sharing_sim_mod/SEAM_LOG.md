@@ -89,18 +89,21 @@ Keys:
 
 ## Implementation steps
 
-### Step 1: options.json changes
-- [ ] Added `experiment.seed` (already done)
-- [ ] Added `users.user_model`
-- [ ] Added `users.meters_per_unit`
-- [ ] Added `users.urgency_prob`
-- [ ] Added `environment.is_raining`
+## Implementation steps
 
-### Step 2: simulator changes
-- [ ] Import RiderBrain
-- [ ] Load model in __init__ (only if realistic mode)
-- [ ] Replace acceptance block with if/else on user_model
-- [ ] Preserve all post-acceptance logic unchanged
+### Step 1: options.json changes 
+- [x] Added `experiment.seed`
+- [x] Added `users.user_model` (default: "simple")
+- [x] Added `users.meters_per_unit` (default: 133)
+- [x] Added `users.urgency_prob` (default: 0.3)
+- [x] Added top-level `environment.is_raining` (default: false)
+
+### Step 2: simulator imports 
+- [x] Added `import sys`
+- [x] Added `sys.path.insert(0, ...)` to expose bike_sharing_sim_mod/ to Python path
+- [x] Added `from intelligence.rider_brain import RiderBrain`
+- [x] Behavior-preservation test PASSED: baseline numbers identical to pre-import run
+- Verified: RiderBrain is now available but not yet used
 
 ### Step 3: Behavior preservation test
 - Run with user_model: simple

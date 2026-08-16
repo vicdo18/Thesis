@@ -1,3 +1,4 @@
+import os 
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
@@ -6,6 +7,10 @@ import math
 from collections import defaultdict
 import json
 import pprint
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+from intelligence.rider_brain import RiderBrain
 
 class BikeSimulator:
     def __init__(self, grid_file='', station_file='', pref_file=''):
