@@ -123,6 +123,21 @@ class BikeSimulator:
         self.hourly_metrics = []
         self.daily_metrics = []
 
+                # --- User model selection ---          
+        # 'simple' = original bucket-based logic
+        # 'realistic' = context-aware ML decision via RiderBrain
+        self.user_model = self.preferences['users'].get('user_model', 'simple')
+
+        if self.user_model == 'realistic':
+            self.brain = RiderBrain()
+            self.meters_per_unit = self.preferences['users'].get('meters_per_unit', 133)
+            self.is_raining = self.preferences.get('environment', {}).get('is_raining', False)
+            self.urgency_prob = self.preferences['users'].get('urgency_prob', 0.3)
+            print(f"[RiderBrain loaded] user_model=realistic, meters_per_unit={self.meters_per_unit}, "
+                f"is_raining={self.is_raining}, urgency_prob={self.urgency_prob}")
+        else:
+            print(f"[Simple user model] Using original bucket-based decision logic.")
+
     
     def distance(self, station1, station2):
         """Calculate Euclidean distance between two stations"""
