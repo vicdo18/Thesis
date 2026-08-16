@@ -432,19 +432,35 @@ class BikeSimulator:
                 if incentives:
                     # Consider best incentive first
                     best_incentive = incentives[0]
-                    
-                    # User decision based on category and incentive attractiveness
-                    incentive_attractiveness = best_incentive['effective_amount'] #/ self.max_incentive
-                    
-                    # Calculate probability of accepting the incentive
-                    if self.preferences['strategies']['mode']!="none":
-                        accept_probability = min(1.0, acceptance_probability * incentive_attractiveness * 1.5)
-                    else:
-                        accept_probability = 0
 
-                    #print('found', len(incentives), 'incentives, p=', accept_probability)
-                    
-                    if random.random() < accept_probability:
+                    # --- User decision: branch on user_model ---
+                    if self.user_model == 'simple':
+                        # Original bucket-based logic (unchanged from Komninos et al.)
+                        incentive_attractiveness = best_incentive['effective_amount']
+                        if self.preferences['strategies']['mode'] != "none":
+                            accept_probability = min(1.0, acceptance_probability * incentive_attractiveness * 1.5)
+                        else:
+                            accept_probability = 0
+                        user_accepts = random.random() < accept_probability
+
+                    else:
+                        # RiderBrain: context-aware decision (raw incentive + distance in meters).
+                        # Distance converted from grid units to meters at the seam boundary.
+                        # Incentive passed as raw amount (NOT effective_amount) to avoid
+                        # double-counting the distance penalty, which is already learned by the model.
+                        if self.preferences['strategies']['mode'] == "none":
+                            user_accepts = False
+                        else:
+                            distance_m = best_incentive['redirect_distance'] * self.meters_per_unit
+                            urgency_high = 1 if random.random() < self.urgency_prob else 0
+                            user_accepts = self.brain.decide(
+                                incentive=best_incentive['amount'],
+                                distance=distance_m,
+                                weather_bad=int(self.is_raining),
+                                urgency_high=urgency_high
+                            )
+
+                    if user_accepts:
                         # User accepts the incentive
                         final_dest_idx = best_incentive['station_id']
                         applied_incentive = best_incentive['amount']

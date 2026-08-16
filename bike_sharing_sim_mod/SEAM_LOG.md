@@ -105,13 +105,22 @@ Keys:
 - [x] Behavior-preservation test PASSED: baseline numbers identical to pre-import run
 - Verified: RiderBrain is now available but not yet used
 
-### Step 3: simulator __init__ ✅
+### Step 3: simulator __init__ 
 - [x] Added user_model attribute (read from options.json)
 - [x] Added conditional RiderBrain loading (only if realistic mode)
 - [x] Added meters_per_unit, is_raining, urgency_prob attributes (only for realistic)
 - [x] Added diagnostic print for mode identification
 - [x] Behavior-preservation test PASSED: baseline numbers identical
 - Verified: In simple mode, all attributes for realistic mode remain unloaded
+
+### Step 3.1: seam in generate_trips 
+- [x] Wrapped user decision block in if/else on self.user_model
+- [x] Simple branch: original logic, unchanged
+- [x] Realistic branch: RiderBrain.decide() with grid→meters conversion, per-trip urgency roll
+- [x] Post-acceptance block: unchanged (budget updates, redirect assignment)
+- [x] Behavior-preservation test PASSED: baseline numbers identical
+
+## Ready for first realistic experiment
 
 ### Step 4: First realistic run
 - Run with user_model: realistic
