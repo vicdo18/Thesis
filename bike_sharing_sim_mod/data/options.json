@@ -55,6 +55,7 @@
         "seed": 42
     },
     "environment": {
-        "is_raining": false
+        "is_raining": false,
+        "debug_realistic": true
     }
 }

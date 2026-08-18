@@ -133,8 +133,24 @@ class BikeSimulator:
             self.meters_per_unit = self.preferences['users'].get('meters_per_unit', 133)
             self.is_raining = self.preferences.get('environment', {}).get('is_raining', False)
             self.urgency_prob = self.preferences['users'].get('urgency_prob', 0.3)
+            self.debug_realistic = self.preferences.get('environment', {}).get('debug_realistic', False)
             print(f"[RiderBrain loaded] user_model=realistic, meters_per_unit={self.meters_per_unit}, "
                 f"is_raining={self.is_raining}, urgency_prob={self.urgency_prob}")
+
+            if self.debug_realistic:
+                import csv
+                debug_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'outputs')
+                os.makedirs(debug_dir, exist_ok=True)
+                debug_path = os.path.join(debug_dir, 'debug_realistic_decisions.csv')
+                # 'a' mode so multiple strategy runs append to same file
+                self.debug_file = open(debug_path, 'a', newline='', encoding='utf-8')
+                self.debug_writer = csv.writer(self.debug_file)
+                # Write header only if file is empty
+                if self.debug_file.tell() == 0:
+                    self.debug_writer.writerow(['strategy', 'hour', 'incentive', 'distance_units',
+                                                 'distance_m', 'weather_bad', 'urgency_high',
+                                                 'probability', 'decision'])
+                print(f"[DEBUG] Realistic decisions logged to {debug_path}")
         else:
             print(f"[Simple user model] Using original bucket-based decision logic.")
 
@@ -392,10 +408,10 @@ class BikeSimulator:
                 # nearby stations must have spaces to dock
                 nearby_stations = []
                 for i, nstation in enumerate(candidate_stations):
-                    if i != dest_idx:  # Don't include the original destination
-                        redirect_dist = self.distance(dest_station, nstation)
+                    if i != dest_idx:  # Don't include the original destination   ---! bug (sugkrinei diaforetika noumera)
+                        redirect_dist = self.distance(dest_station, nstation)   #nstation is the candidate station, dest_station is the original destination
                         if redirect_dist <= self.max_redirection_distance and nstation['bikes']<self.preferences['stations']['capacity']:
-                            nearby_stations.append((i, station, redirect_dist))
+                            nearby_stations.append((i, station, redirect_dist))   ##BUGGGGGGG
                 
                 # Sort by distance (closest first)
                 nearby_stations.sort(key=lambda x: x[2])
@@ -453,12 +469,32 @@ class BikeSimulator:
                         else:
                             distance_m = best_incentive['redirect_distance'] * self.meters_per_unit
                             urgency_high = 1 if random.random() < self.urgency_prob else 0
-                            user_accepts = self.brain.decide(
-                                incentive=best_incentive['amount'],
-                                distance=distance_m,
-                                weather_bad=int(self.is_raining),
-                                urgency_high=urgency_high
-                            )
+                            if self.debug_realistic:
+                                prob = self.brain.accept_probability(
+                                    incentive=best_incentive['amount'],
+                                    distance=distance_m,
+                                    weather_bad=int(self.is_raining),
+                                    urgency_high=urgency_high
+                                )
+                                user_accepts = prob > 0.5
+                                self.debug_writer.writerow([
+                                    self.preferences['strategies']['mode'],
+                                    self.current_hour,
+                                    round(best_incentive['amount'], 4),
+                                    round(best_incentive['redirect_distance'], 4),
+                                    round(distance_m, 2),
+                                    int(self.is_raining),
+                                    urgency_high,
+                                    round(prob, 4),
+                                    int(user_accepts)
+                                ])
+                            else:
+                                user_accepts = self.brain.decide(
+                                    incentive=best_incentive['amount'],
+                                    distance=distance_m,
+                                    weather_bad=int(self.is_raining),
+                                    urgency_high=urgency_high
+                                )
 
                     if user_accepts:
                         # User accepts the incentive
