@@ -14,7 +14,7 @@
         "base_demand": 15
     },
     "users": {
-        "user_model": "realistic",  
+        "user_model": "realistic", 
         "meters_per_unit": 133,
         "urgency_prob": 0.3,
         "category_distribution":[0.3, 0.5, 0.2],
@@ -55,7 +55,7 @@
         "seed": 42
     },
     "environment": {
-        "is_raining": false,
+        "is_raining": true,
         "debug_realistic": true
     }
 }
