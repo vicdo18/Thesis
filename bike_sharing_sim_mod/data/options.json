@@ -17,7 +17,7 @@
         "user_model": "realistic", 
         "meters_per_unit": 133,
         "urgency_prob": 0.3,
-        "category_distribution":[0.3, 0.5, 0.2],
+        "category_distribution":[0.3, 0.5, 0.2], 
         "base_distance":8.0,
         "max_redirection": 3.0,
         "loyal": [
@@ -55,7 +55,7 @@
         "seed": 42
     },
     "environment": {
-        "is_raining": true,
+        "is_raining": false,
         "debug_realistic": true
     }
 }

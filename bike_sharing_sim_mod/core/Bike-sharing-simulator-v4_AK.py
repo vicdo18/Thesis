@@ -404,33 +404,36 @@ class BikeSimulator:
                 min_prob, max_prob = self.user_categories[user_category]['acceptance_range']
                 acceptance_probability = min_prob + random.random() * (max_prob - min_prob)
                 
-                # Find nearby stations to the selected dest that might offer incentives
+                                # Find nearby stations to the selected dest that might offer incentives
                 # nearby stations must have spaces to dock
                 nearby_stations = []
-                for i, nstation in enumerate(candidate_stations):
-                    if i != dest_idx:  # Don't include the original destination   ---! bug (sugkrinei diaforetika noumera)
-                        redirect_dist = self.distance(dest_station, nstation)   #nstation is the candidate station, dest_station is the original destination
-                        if redirect_dist <= self.max_redirection_distance and nstation['bikes']<self.preferences['stations']['capacity']:
-                            nearby_stations.append((i, station, redirect_dist))   ##BUGGGGGGG
-                
+                for nstation in candidate_stations:
+                    # FIX 1: compare global station ids (was: local list position vs global index)
+                    if nstation['id'] != dest_station['id']:
+                        redirect_dist = self.distance(dest_station, nstation)
+                        if redirect_dist <= self.max_redirection_distance and nstation['bikes'] < self.preferences['stations']['capacity']:
+                            # FIX 2 + 4: store the alternative station itself and its GLOBAL id
+                            # (was: the origin 'station' and the local position i)
+                            nearby_stations.append((nstation['id'], nstation, redirect_dist))
+
                 # Sort by distance (closest first)
                 nearby_stations.sort(key=lambda x: x[2])
-                
+
                 # Calculate incentives from nearby stations
                 incentives = []
-                for i, istation, redirect_dist in nearby_stations:
-                    # Check if station needs bikes
-                    # low capacity is 20% of station capacity
-                    incentive_amount = self.calculate_incentive(istation, self.current_hour, price, station['bikes'] < int(self.preferences['stations']['capacity']*0.2))
-                    
+                for sid, istation, redirect_dist in nearby_stations:
+                    # FIX 5: check whether the ALTERNATIVE station is low on bikes (was: the origin)
+                    low_on_bikes = istation['bikes'] < int(self.preferences['stations']['capacity'] * 0.2)
+                    # FIX 3: argument order now matches def calculate_incentive(station, trip_price, hour, low)
+                    incentive_amount = self.calculate_incentive(istation, price, self.current_hour, low_on_bikes)
+
                     if incentive_amount > 0:
                         # Adjust incentive attractiveness based on distance from original destination
                         distance_penalty = redirect_dist / self.max_redirection_distance
                         effective_incentive = incentive_amount * (1 - distance_penalty * 0.7)
-                        
-                        # Add to incentives list
+
                         incentives.append({
-                            'station_id': i,
+                            'station_id': sid,
                             'amount': incentive_amount,
                             'effective_amount': effective_incentive,
                             'redirect_distance': redirect_dist
@@ -459,7 +462,7 @@ class BikeSimulator:
                             accept_probability = 0
                         user_accepts = random.random() < accept_probability
 
-                    else:
+                    else:      #SEAM 
                         # RiderBrain: context-aware decision (raw incentive + distance in meters).
                         # Distance converted from grid units to meters at the seam boundary.
                         # Incentive passed as raw amount (NOT effective_amount) to avoid
