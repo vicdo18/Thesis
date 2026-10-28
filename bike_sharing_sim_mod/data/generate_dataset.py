@@ -13,7 +13,7 @@ DEFAULT_PARAMS = {
     'urgency_penalty': 2.0,
     'walk_cliff_m': 400,
     'cliff_penalty': 1.5,
-    'noise_sigma': 0.5,
+    'noise_sigma': 0.5, # Standard deviation of the noise term
     'rain_prob': 0.2,
     'urgency_prob': 0.3,
 }
@@ -26,7 +26,7 @@ def generate_dataset(records=10000, params=None, seed=42, out_path=None):
 
     # 1. Feature Generation
     # Distance in meters (0 to 600m)
-    distance = np.random.uniform(50, 600, records)
+    distance = np.random.uniform(0, 600, records)
 
     # Incentive in Euros
     incentive = np.random.uniform(0.5, 5.0, records)
@@ -53,7 +53,7 @@ def generate_dataset(records=10000, params=None, seed=42, out_path=None):
 
     # 3. Decision Making (Sigmoid function to convert utility to probability)
     # We add some "Noise" (human randomness)
-    noise = np.random.normal(0, params['noise_sigma'], records)
+    noise = np.random.normal(0, params['noise_sigma'], records)    
     probability = 1 / (1 + np.exp(-(utility + noise)))
 
     # Final Decision: 1 if prob > 0.5, else 0

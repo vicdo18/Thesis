@@ -1,0 +1,59 @@
+--- a/bike_sharing_sim_mod/core/Bike-sharing-simulator-v4_AK.py	2026-10-28 13:31:41.706664307 +0200
++++ b/bike_sharing_sim_mod/core/Bike-sharing-simulator-v4_AK.py	2026-10-28 13:32:09.313343985 +0200
+@@ -31,6 +31,10 @@
+         np.random.seed(self.seed)
+         print(f"[Simulator] Random seed set to {self.seed} — this run is deterministic.")
+ 
++        # Verbose console output (e.g. 'out of money' messages). Off by default:
++        # printing has no effect on results, it only floods the terminal.
++        self.verbose = self.preferences.get('environment', {}).get('verbose', False)
++
+         with open(grid_file) as f:
+             self.grid_size=len(json.load(f))
+ 
+@@ -220,7 +224,8 @@
+     def calculate_incentive(self, station, trip_price, hour, is_currently_low_on_bikes=False):
+         #consider remaining money first
+         if station['remaining_budget']==0:
+-            print (station['id'], 'out of money')
++            if self.verbose:
++                print (station['id'], 'out of money')
+             return 0
+ 
+         #basic strategies
+@@ -940,6 +945,11 @@
+         plt.tight_layout()
+         return fig
+         
++    def close_debug(self):
++        """Close the realistic-decision debug log, if one is open."""
++        if getattr(self, 'debug_file', None) is not None and not self.debug_file.closed:
++            self.debug_file.close()
++
+     def analyze_incentive_effectiveness(self):
+         """Analyze the effectiveness of incentives by user category"""
+         if not self.completed_trips:
+@@ -1232,6 +1242,15 @@
+ 
+ # Example usage demonstrating the simulator
+ if __name__ == "__main__":
++    # Start a fresh debug log for this execution. A log left over from an earlier
++    # execution is kept, renamed with its timestamp, so runs are never mixed.
++    import datetime
++    _debug_csv = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'outputs', 'debug_realistic_decisions.csv')
++    if os.path.exists(_debug_csv):
++        _stamp = datetime.datetime.fromtimestamp(os.path.getmtime(_debug_csv)).strftime('%Y%m%d_%H%M%S')
++        os.replace(_debug_csv, _debug_csv.replace('.csv', f'_{_stamp}.csv'))
++        print(f"[DEBUG] Previous debug log archived as debug_realistic_decisions_{_stamp}.csv")
++
+     # Create simulator with smaller grid for testing
+     
+ 
+@@ -1248,6 +1267,7 @@
+         simulator.preferences['strategies']['mode']=mode
+         # Run simulation for 7 days
+         results = simulator.run_simulation(days=5)
++        simulator.close_debug()
+     
+         # Serializing json (Metrics)
+         json_object = json.dumps(results, indent=4, cls=NpEncoder)
